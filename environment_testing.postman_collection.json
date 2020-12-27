@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "9fda1996-a9d1-4849-b4e3-82fb437e833b",
+		"name": "environment_testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "07ba424d-e201-4dd4-bdfe-7cd67c66edf8",
+						"exec": [
+							"pm.environment.get(\"variable_key\");\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[0].accountNo).to.eql(\"Oak\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/account",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET each",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "64c14132-9699-4c1c-a10b-ebf08fdf3432",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.accountNo).to.eql(\"Oak\");\r",
+							"});\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    pm.response.to.have.body('{\"accountNo\":\"Oak\",\"balance\":10000.00,\"status\":0,\"personId\":\"Test\"}');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/account/{{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"account",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a04e8a27-8530-4d9b-b712-242097a816d2",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.accountNo).to.eql(\"try push\");\r",
+							"});\r",
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"accountNo\":\"try push\",\r\n    \"balance\":4000,\r\n    \"status\":4,\r\n    \"personId\":\"PUSH\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/addAccount",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"addAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6f7656a0-a9ae-4edd-ba1e-ac46f3c28ba8",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    pm.response.to.have.body(\"Delete account id Oak complete\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/deleteAccount/{{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"deleteAccount",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT update Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "65cfd726-5027-4a93-b43e-bf02fc149a48",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"balance update\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.balance).to.eql(4000);\r",
+							"});\r",
+							"pm.test(\"status update\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status).to.eql(3);\r",
+							"});\r",
+							"pm.test(\"personId update\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.personId).to.eql(\"update data\");\r",
+							"});\r",
+							"pm.test(\"accountNo no change\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.accountNo).to.eql(\"try push\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"accountNo\":\"test\",\r\n    \"balance\":4000,\r\n    \"status\":3,\r\n    \"personId\":\"update data\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/updateAccount/{{idUpdate}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"updateAccount",
+						"{{idUpdate}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
